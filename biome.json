@@ -6,7 +6,17 @@
 		"useIgnoreFile": true
 	},
 	"files": {
-		"ignoreUnknown": false
+		"ignoreUnknown": false,
+		"includes": [
+			"**",
+			"!src/routes.gen.ts",
+			"!src/**/*.css",
+			"!node_modules",
+			"!.tanstack",
+			"!public",
+			"!dev-dist",
+			"!*.json"
+		]
 	},
 	"formatter": {
 		"enabled": true,
