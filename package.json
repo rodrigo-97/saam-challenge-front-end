@@ -10,6 +10,7 @@
     "lint": "yarn exec biome check --write src"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.90.12",
     "@tanstack/react-router": "^1.140.1",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
