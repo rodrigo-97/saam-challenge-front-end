@@ -1,5 +1,12 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import { Input } from "@/components";
 import { t } from "@/configs";
+import { showApiError } from "@/helpers";
+import { signUpSchema } from "@/models";
+import { useSignUp } from "@/remotes/auth";
 
 export const Route = createFileRoute("/auth/sign-up")({
 	component: RouteComponent,
@@ -8,9 +15,31 @@ export const Route = createFileRoute("/auth/sign-up")({
 function RouteComponent() {
 	const navigate = useNavigate();
 
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm({
+		resolver: zodResolver(signUpSchema),
+	});
+
 	const navigateToSignIn = () => {
 		navigate({ to: "/auth/sign-in" });
 	};
+
+	const { signUp } = useSignUp({
+		onSuccess: () => {
+			toast.success(t("pages.signUp.notifications.accountCreated"));
+		},
+		onError: (err) => {
+			showApiError(err);
+		},
+	});
+
+	const onSubmit = handleSubmit(async (data) => {
+		await signUp(data);
+		navigateToSignIn();
+	});
 
 	return (
 		<div>
@@ -19,73 +48,62 @@ function RouteComponent() {
 			</h2>
 
 			<div className="flex flex-col gap-2">
-				<fieldset className="fieldset w-full">
-					<legend className="fieldset-legend">
-						{t("pages.signUp.fields.username.label")}
-					</legend>
-					<input
-						type="text"
-						className="input input-primary w-full"
-						placeholder={t("pages.signUp.fields.username.placeholder")}
-					/>
-				</fieldset>
+				<Input
+					label={t("pages.signUp.fields.username.label")}
+					placeholder={t("pages.signUp.fields.username.placeholder")}
+					name="username"
+					register={register}
+					error={errors.username?.message}
+				/>
 
-				<fieldset className="fieldset w-full">
-					<legend className="fieldset-legend">
-						{t("pages.signUp.fields.email.label")}
-					</legend>
-					<input
-						type="email"
-						className="input input-primary w-full"
-						placeholder={t("pages.signUp.fields.email.placeholder")}
-					/>
-				</fieldset>
+				<Input
+					label={t("pages.signUp.fields.email.label")}
+					placeholder={t("pages.signUp.fields.email.placeholder")}
+					type="email"
+					name="email"
+					register={register}
+					error={errors.email?.message}
+				/>
 
-				<fieldset className="fieldset w-full">
-					<legend className="fieldset-legend">
-						{t("pages.signUp.fields.firstName.label")}
-					</legend>
-					<input
-						type="text"
-						className="input input-primary w-full"
-						placeholder={t("pages.signUp.fields.firstName.placeholder")}
-					/>
-				</fieldset>
+				<Input
+					label={t("pages.signUp.fields.firstName.label")}
+					placeholder={t("pages.signUp.fields.firstName.placeholder")}
+					name="firstName"
+					register={register}
+					error={errors.firstName?.message}
+				/>
 
-				<fieldset className="fieldset w-full">
-					<legend className="fieldset-legend">
-						{t("pages.signUp.fields.lastName.label")}
-					</legend>
-					<input
-						type="text"
-						className="input input-primary w-full"
-						placeholder={t("pages.signUp.fields.lastName.placeholder")}
-					/>
-				</fieldset>
+				<Input
+					label={t("pages.signUp.fields.lastName.label")}
+					placeholder={t("pages.signUp.fields.lastName.placeholder")}
+					name="lastName"
+					register={register}
+					error={errors.lastName?.message}
+				/>
 
-				<fieldset className="fieldset w-full">
-					<legend className="fieldset-legend">
-						{t("pages.signUp.fields.password.label")}
-					</legend>
-					<input
-						type="password"
-						className="input input-primary w-full"
-						placeholder={t("pages.signUp.fields.password.placeholder")}
-					/>
-				</fieldset>
+				<Input
+					label={t("pages.signUp.fields.password.label")}
+					placeholder={t("pages.signUp.fields.password.placeholder")}
+					type="password"
+					name="password"
+					register={register}
+					error={errors.password?.message}
+				/>
 
-				<fieldset className="fieldset w-full">
-					<legend className="fieldset-legend">
-						{t("pages.signUp.fields.confirmPassword.label")}
-					</legend>
-					<input
-						type="password"
-						className="input input-primary w-full"
-						placeholder={t("pages.signUp.fields.confirmPassword.placeholder")}
-					/>
-				</fieldset>
+				<Input
+					label={t("pages.signUp.fields.confirmPassword.label")}
+					placeholder={t("pages.signUp.fields.confirmPassword.placeholder")}
+					type="password"
+					name="confirmPassword"
+					register={register}
+					error={errors.confirmPassword?.message}
+				/>
 
-				<button type="button" className="btn btn-primary w-full mt-2">
+				<button
+					type="button"
+					className="btn btn-primary w-full mt-2"
+					onClick={onSubmit}
+				>
 					{t("pages.signUp.submit")}
 				</button>
 

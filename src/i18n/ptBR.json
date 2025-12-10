@@ -3,7 +3,17 @@
 		"validations": {
 			"REQUIRED_FIELD": "Campo obrigatório",
 			"MIN_LENGTH": "O valor informado deve conter no mínimo %{min} caracteres.",
-			"MAX_LENGTH": "O valor informado deve conter no máximo %{max} caracteres."
+			"MAX_LENGTH": "O valor informado deve conter no máximo %{max} caracteres.",
+			"INVALID_EMAIL": "O endereço de e-mail informado não é válido.",
+			"PASSWORDS_DONT_MATCH": "As senhas informadas não coincidem.",
+			"CONFIRM_PASSWORD_REQUIRED": "A confirmação de senha é obrigatória.",
+			"PASSWORD_COMPLEXITY": "A senha deve conter pelo menos uma letra maiúscula, uma letra minúscula, um número e um caractere especial."
+		},
+		"api": {
+			"EMPLOYEE_NOT_FOUND": "Funcionário não encontrado.",
+			"INVALID_CREDENTIALS": "Usuário ou senha inválidos.",
+			"USER_ALREADY_EXISTS": "O usuário informado já existe.",
+			"USER_NOT_FOUND": "Usuário não encontrado."
 		}
 	},
 	"pages": {
@@ -27,6 +37,9 @@
 			"submit": "Cadastrar",
 			"register": "Criar nova conta",
 			"alreadyHaveAccount": "Já possuo uma conta",
+			"notifications": {
+				"accountCreated": "Conta cadastrada com sucesso."
+			},
 			"fields": {
 				"username": {
 					"label": "Nome de usuário",

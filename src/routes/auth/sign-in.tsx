@@ -1,7 +1,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
+import { Input } from "@/components";
 import { t } from "@/configs";
+import { showApiError } from "@/helpers";
 import { signInSchema } from "@/models";
 import { useSignIn } from "@/remotes/auth";
 import type { RemoteSignIn } from "@/remotes/models";
@@ -25,7 +27,11 @@ function RouteComponent() {
 		navigate({ to: "/auth/sign-up" });
 	};
 
-	const { signIn } = useSignIn();
+	const { signIn } = useSignIn({
+		onError: (err) => {
+			showApiError(err);
+		},
+	});
 
 	const onSubmit = handleSubmit(async (data) => {
 		const { accessToken } = (await signIn(data)) as unknown as RemoteSignIn;
@@ -40,35 +46,22 @@ function RouteComponent() {
 			</h2>
 
 			<div className="flex flex-col gap-2">
-				<fieldset className="fieldset w-full">
-					<legend className="fieldset-legend">
-						{t("pages.signIn.fields.username.label")}
-					</legend>
-					<input
-						{...register("username")}
-						type="text"
-						className="input input-primary w-full"
-						placeholder={t("pages.signIn.fields.username.placeholder")}
-					/>
-					{errors.username && (
-						<p className="label text-error">{errors.username?.message}</p>
-					)}
-				</fieldset>
+				<Input
+					label={t("pages.signIn.fields.username.label")}
+					placeholder={t("pages.signIn.fields.username.placeholder")}
+					name="username"
+					register={register}
+					error={errors.username?.message}
+				/>
 
-				<fieldset className="fieldset w-full">
-					<legend className="fieldset-legend">
-						{t("pages.signIn.fields.password.label")}
-					</legend>
-					<input
-						{...register("password")}
-						type="password"
-						className="input input-primary w-full"
-						placeholder={t("pages.signIn.fields.password.placeholder")}
-					/>
-					{errors.password && (
-						<p className="label text-error">{errors.password?.message}</p>
-					)}
-				</fieldset>
+				<Input
+					label={t("pages.signIn.fields.password.label")}
+					placeholder={t("pages.signIn.fields.password.placeholder")}
+					type="password"
+					name="password"
+					register={register}
+					error={errors.password?.message}
+				/>
 
 				<button
 					type="button"
