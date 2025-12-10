@@ -1,1 +1,2 @@
-export * from "./i18n.config";
+export * from "./axios";
+export * from "./i18n";

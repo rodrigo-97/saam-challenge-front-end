@@ -1,0 +1,58 @@
+{
+	"errors": {
+		"validations": {
+			"REQUIRED_FIELD": "Campo obrigatório",
+			"MIN_LENGTH": "O valor informado deve conter no mínimo %{min} caracteres.",
+			"MAX_LENGTH": "O valor informado deve conter no máximo %{max} caracteres."
+		}
+	},
+	"pages": {
+		"signIn": {
+			"header": "Entrar",
+			"submit": "Entrar",
+			"register": "Criar nova conta",
+			"fields": {
+				"username": {
+					"label": "Nome de usuário",
+					"placeholder": "Ex: jhon.doe"
+				},
+				"password": {
+					"label": "Senha",
+					"placeholder": "Ex: minha senha super segura"
+				}
+			}
+		},
+		"signUp": {
+			"header": "Registrar",
+			"submit": "Cadastrar",
+			"register": "Criar nova conta",
+			"alreadyHaveAccount": "Já possuo uma conta",
+			"fields": {
+				"username": {
+					"label": "Nome de usuário",
+					"placeholder": "Ex: jhon.doe"
+				},
+				"email": {
+					"label": "E-mail",
+					"placeholder": "Ex: jhondoe@email.com"
+				},
+				"firstName": {
+					"label": "Nome",
+					"placeholder": "Ex: Jhon"
+				},
+				"lastName": {
+					"label": "Sobrenome",
+					"placeholder": "Ex: Doe"
+				},
+				"password": {
+					"label": "Senha",
+					"placeholder": "Ex: minha senha super segura"
+				},
+				"confirmPassword": {
+					"label": "Confirmar senha",
+					"placeholder": "Ex: minha senha super segura"
+				}
+			}
+		}
+	}
+}
