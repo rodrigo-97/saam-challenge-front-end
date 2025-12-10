@@ -9,58 +9,140 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from "./routes/__root"
+import { Route as AuthRouteRouteImport } from "./routes/auth/route"
 import { Route as IndexRouteImport } from "./routes/index"
+import { Route as EmployeesIndexRouteImport } from "./routes/employees/index"
+import { Route as EmployeesCreateRouteImport } from "./routes/employees/create"
 import { Route as AuthSignUpRouteImport } from "./routes/auth/sign-up"
 import { Route as AuthSignInRouteImport } from "./routes/auth/sign-in"
+import { Route as EmployeesEmployeeIdUpdateRouteImport } from "./routes/employees/$employeeId/update"
+import { Route as EmployeesEmployeeIdDetailsRouteImport } from "./routes/employees/$employeeId/details"
 
+const AuthRouteRoute = AuthRouteRouteImport.update({
+  id: "/auth",
+  path: "/auth",
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: "/",
   path: "/",
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthSignUpRoute = AuthSignUpRouteImport.update({
-  id: "/auth/sign-up",
-  path: "/auth/sign-up",
+const EmployeesIndexRoute = EmployeesIndexRouteImport.update({
+  id: "/employees/",
+  path: "/employees/",
   getParentRoute: () => rootRouteImport,
+} as any)
+const EmployeesCreateRoute = EmployeesCreateRouteImport.update({
+  id: "/employees/create",
+  path: "/employees/create",
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthSignUpRoute = AuthSignUpRouteImport.update({
+  id: "/sign-up",
+  path: "/sign-up",
+  getParentRoute: () => AuthRouteRoute,
 } as any)
 const AuthSignInRoute = AuthSignInRouteImport.update({
-  id: "/auth/sign-in",
-  path: "/auth/sign-in",
-  getParentRoute: () => rootRouteImport,
+  id: "/sign-in",
+  path: "/sign-in",
+  getParentRoute: () => AuthRouteRoute,
 } as any)
+const EmployeesEmployeeIdUpdateRoute =
+  EmployeesEmployeeIdUpdateRouteImport.update({
+    id: "/employees/$employeeId/update",
+    path: "/employees/$employeeId/update",
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const EmployeesEmployeeIdDetailsRoute =
+  EmployeesEmployeeIdDetailsRouteImport.update({
+    id: "/employees/$employeeId/details",
+    path: "/employees/$employeeId/details",
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   "/": typeof IndexRoute
+  "/auth": typeof AuthRouteRouteWithChildren
   "/auth/sign-in": typeof AuthSignInRoute
   "/auth/sign-up": typeof AuthSignUpRoute
+  "/employees/create": typeof EmployeesCreateRoute
+  "/employees": typeof EmployeesIndexRoute
+  "/employees/$employeeId/details": typeof EmployeesEmployeeIdDetailsRoute
+  "/employees/$employeeId/update": typeof EmployeesEmployeeIdUpdateRoute
 }
 export interface FileRoutesByTo {
   "/": typeof IndexRoute
+  "/auth": typeof AuthRouteRouteWithChildren
   "/auth/sign-in": typeof AuthSignInRoute
   "/auth/sign-up": typeof AuthSignUpRoute
+  "/employees/create": typeof EmployeesCreateRoute
+  "/employees": typeof EmployeesIndexRoute
+  "/employees/$employeeId/details": typeof EmployeesEmployeeIdDetailsRoute
+  "/employees/$employeeId/update": typeof EmployeesEmployeeIdUpdateRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   "/": typeof IndexRoute
+  "/auth": typeof AuthRouteRouteWithChildren
   "/auth/sign-in": typeof AuthSignInRoute
   "/auth/sign-up": typeof AuthSignUpRoute
+  "/employees/create": typeof EmployeesCreateRoute
+  "/employees/": typeof EmployeesIndexRoute
+  "/employees/$employeeId/details": typeof EmployeesEmployeeIdDetailsRoute
+  "/employees/$employeeId/update": typeof EmployeesEmployeeIdUpdateRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: "/" | "/auth/sign-in" | "/auth/sign-up"
+  fullPaths:
+    | "/"
+    | "/auth"
+    | "/auth/sign-in"
+    | "/auth/sign-up"
+    | "/employees/create"
+    | "/employees"
+    | "/employees/$employeeId/details"
+    | "/employees/$employeeId/update"
   fileRoutesByTo: FileRoutesByTo
-  to: "/" | "/auth/sign-in" | "/auth/sign-up"
-  id: "__root__" | "/" | "/auth/sign-in" | "/auth/sign-up"
+  to:
+    | "/"
+    | "/auth"
+    | "/auth/sign-in"
+    | "/auth/sign-up"
+    | "/employees/create"
+    | "/employees"
+    | "/employees/$employeeId/details"
+    | "/employees/$employeeId/update"
+  id:
+    | "__root__"
+    | "/"
+    | "/auth"
+    | "/auth/sign-in"
+    | "/auth/sign-up"
+    | "/employees/create"
+    | "/employees/"
+    | "/employees/$employeeId/details"
+    | "/employees/$employeeId/update"
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AuthSignInRoute: typeof AuthSignInRoute
-  AuthSignUpRoute: typeof AuthSignUpRoute
+  AuthRouteRoute: typeof AuthRouteRouteWithChildren
+  EmployeesCreateRoute: typeof EmployeesCreateRoute
+  EmployeesIndexRoute: typeof EmployeesIndexRoute
+  EmployeesEmployeeIdDetailsRoute: typeof EmployeesEmployeeIdDetailsRoute
+  EmployeesEmployeeIdUpdateRoute: typeof EmployeesEmployeeIdUpdateRoute
 }
 
 declare module "@tanstack/react-router" {
   interface FileRoutesByPath {
+    "/auth": {
+      id: "/auth"
+      path: "/auth"
+      fullPath: "/auth"
+      preLoaderRoute: typeof AuthRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     "/": {
       id: "/"
       path: "/"
@@ -68,27 +150,72 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    "/employees/": {
+      id: "/employees/"
+      path: "/employees"
+      fullPath: "/employees"
+      preLoaderRoute: typeof EmployeesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    "/employees/create": {
+      id: "/employees/create"
+      path: "/employees/create"
+      fullPath: "/employees/create"
+      preLoaderRoute: typeof EmployeesCreateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     "/auth/sign-up": {
       id: "/auth/sign-up"
-      path: "/auth/sign-up"
+      path: "/sign-up"
       fullPath: "/auth/sign-up"
       preLoaderRoute: typeof AuthSignUpRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AuthRouteRoute
     }
     "/auth/sign-in": {
       id: "/auth/sign-in"
-      path: "/auth/sign-in"
+      path: "/sign-in"
       fullPath: "/auth/sign-in"
       preLoaderRoute: typeof AuthSignInRouteImport
+      parentRoute: typeof AuthRouteRoute
+    }
+    "/employees/$employeeId/update": {
+      id: "/employees/$employeeId/update"
+      path: "/employees/$employeeId/update"
+      fullPath: "/employees/$employeeId/update"
+      preLoaderRoute: typeof EmployeesEmployeeIdUpdateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    "/employees/$employeeId/details": {
+      id: "/employees/$employeeId/details"
+      path: "/employees/$employeeId/details"
+      fullPath: "/employees/$employeeId/details"
+      preLoaderRoute: typeof EmployeesEmployeeIdDetailsRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
 }
 
-const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
+interface AuthRouteRouteChildren {
+  AuthSignInRoute: typeof AuthSignInRoute
+  AuthSignUpRoute: typeof AuthSignUpRoute
+}
+
+const AuthRouteRouteChildren: AuthRouteRouteChildren = {
   AuthSignInRoute: AuthSignInRoute,
   AuthSignUpRoute: AuthSignUpRoute,
+}
+
+const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
+  AuthRouteRouteChildren,
+)
+
+const rootRouteChildren: RootRouteChildren = {
+  IndexRoute: IndexRoute,
+  AuthRouteRoute: AuthRouteRouteWithChildren,
+  EmployeesCreateRoute: EmployeesCreateRoute,
+  EmployeesIndexRoute: EmployeesIndexRoute,
+  EmployeesEmployeeIdDetailsRoute: EmployeesEmployeeIdDetailsRoute,
+  EmployeesEmployeeIdUpdateRoute: EmployeesEmployeeIdUpdateRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
