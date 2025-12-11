@@ -1,73 +1,38 @@
-# React + TypeScript + Vite
+# Projeto Front-end
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este projeto é uma aplicação front-end organizada de forma modular, utilizando TypeScript, React e integração com APIs. A estrutura do projeto é pensada para facilitar manutenção, escalabilidade e organização do código.
 
-Currently, two official plugins are available:
+## Estrutura de Pastas
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### `@types`
+Contém definições de tipos TypeScript globais ou compartilhados entre diferentes partes do projeto, facilitando a tipagem de dados e a integração com APIs.
 
-## React Compiler
+### `components`
+Agrupa todos os componentes reutilizáveis da aplicação, como inputs, tabelas, botões e outros elementos de interface. Componentes podem ser simples ou compostos e são pensados para serem utilizados em diferentes telas.
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+### `configs`
+Armazena configurações globais da aplicação, como setup de bibliotecas, internacionalização, instâncias de clientes HTTP e outras configurações centrais.
 
-## Expanding the ESLint configuration
+### `helpers`
+Contém funções utilitárias e helpers que realizam tarefas comuns em diferentes partes do projeto, como formatação de dados, notificações ou manipulação de valores.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### `i18n`
+Arquivos de internacionalização que armazenam textos e traduções da aplicação para diferentes idiomas.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### `models`
+Define os modelos de dados utilizados na aplicação, como estruturas de dados que representam usuários, funcionários ou outras entidades do sistema.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### `remotes`
+Responsável pela comunicação com APIs externas ou serviços remotos.  
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- **models**: interfaces ou definições de dados que vêm das APIs.  
+- **services**: funções que fazem requisições HTTP e encapsulam a lógica de comunicação com os serviços externos.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### `routes`
+Contém a definição das rotas da aplicação e suas respectivas páginas e componentes de layout. Permite organizar a navegação e os fluxos da aplicação de forma modular.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### `root.css`
+Arquivo global de estilos CSS, que define regras e temas globais da aplicação.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### Arquivos na raiz (`app.tsx`, `main.tsx`)
+Entrypoints e arquivos principais da aplicação, responsáveis por inicializar o React, aplicar provedores globais e renderizar a aplicação no navegador.
