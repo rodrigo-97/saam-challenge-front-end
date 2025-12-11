@@ -9,15 +9,20 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from "./routes/__root"
+import { Route as EmployeesRouteRouteImport } from "./routes/employees/route"
 import { Route as AuthRouteRouteImport } from "./routes/auth/route"
 import { Route as IndexRouteImport } from "./routes/index"
 import { Route as EmployeesIndexRouteImport } from "./routes/employees/index"
 import { Route as EmployeesCreateRouteImport } from "./routes/employees/create"
 import { Route as AuthSignUpRouteImport } from "./routes/auth/sign-up"
 import { Route as AuthSignInRouteImport } from "./routes/auth/sign-in"
-import { Route as EmployeesEmployeeIdUpdateRouteImport } from "./routes/employees/$employeeId/update"
-import { Route as EmployeesEmployeeIdDetailsRouteImport } from "./routes/employees/$employeeId/details"
+import { Route as EmployeesEmployeeIdUpdateRouteImport } from "./routes/employees/$employeeId.update"
 
+const EmployeesRouteRoute = EmployeesRouteRouteImport.update({
+  id: "/employees",
+  path: "/employees",
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthRouteRoute = AuthRouteRouteImport.update({
   id: "/auth",
   path: "/auth",
@@ -29,14 +34,14 @@ const IndexRoute = IndexRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const EmployeesIndexRoute = EmployeesIndexRouteImport.update({
-  id: "/employees/",
-  path: "/employees/",
-  getParentRoute: () => rootRouteImport,
+  id: "/",
+  path: "/",
+  getParentRoute: () => EmployeesRouteRoute,
 } as any)
 const EmployeesCreateRoute = EmployeesCreateRouteImport.update({
-  id: "/employees/create",
-  path: "/employees/create",
-  getParentRoute: () => rootRouteImport,
+  id: "/create",
+  path: "/create",
+  getParentRoute: () => EmployeesRouteRoute,
 } as any)
 const AuthSignUpRoute = AuthSignUpRouteImport.update({
   id: "/sign-up",
@@ -50,25 +55,19 @@ const AuthSignInRoute = AuthSignInRouteImport.update({
 } as any)
 const EmployeesEmployeeIdUpdateRoute =
   EmployeesEmployeeIdUpdateRouteImport.update({
-    id: "/employees/$employeeId/update",
-    path: "/employees/$employeeId/update",
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const EmployeesEmployeeIdDetailsRoute =
-  EmployeesEmployeeIdDetailsRouteImport.update({
-    id: "/employees/$employeeId/details",
-    path: "/employees/$employeeId/details",
-    getParentRoute: () => rootRouteImport,
+    id: "/$employeeId/update",
+    path: "/$employeeId/update",
+    getParentRoute: () => EmployeesRouteRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
   "/": typeof IndexRoute
   "/auth": typeof AuthRouteRouteWithChildren
+  "/employees": typeof EmployeesRouteRouteWithChildren
   "/auth/sign-in": typeof AuthSignInRoute
   "/auth/sign-up": typeof AuthSignUpRoute
   "/employees/create": typeof EmployeesCreateRoute
-  "/employees": typeof EmployeesIndexRoute
-  "/employees/$employeeId/details": typeof EmployeesEmployeeIdDetailsRoute
+  "/employees/": typeof EmployeesIndexRoute
   "/employees/$employeeId/update": typeof EmployeesEmployeeIdUpdateRoute
 }
 export interface FileRoutesByTo {
@@ -78,18 +77,17 @@ export interface FileRoutesByTo {
   "/auth/sign-up": typeof AuthSignUpRoute
   "/employees/create": typeof EmployeesCreateRoute
   "/employees": typeof EmployeesIndexRoute
-  "/employees/$employeeId/details": typeof EmployeesEmployeeIdDetailsRoute
   "/employees/$employeeId/update": typeof EmployeesEmployeeIdUpdateRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   "/": typeof IndexRoute
   "/auth": typeof AuthRouteRouteWithChildren
+  "/employees": typeof EmployeesRouteRouteWithChildren
   "/auth/sign-in": typeof AuthSignInRoute
   "/auth/sign-up": typeof AuthSignUpRoute
   "/employees/create": typeof EmployeesCreateRoute
   "/employees/": typeof EmployeesIndexRoute
-  "/employees/$employeeId/details": typeof EmployeesEmployeeIdDetailsRoute
   "/employees/$employeeId/update": typeof EmployeesEmployeeIdUpdateRoute
 }
 export interface FileRouteTypes {
@@ -97,11 +95,11 @@ export interface FileRouteTypes {
   fullPaths:
     | "/"
     | "/auth"
+    | "/employees"
     | "/auth/sign-in"
     | "/auth/sign-up"
     | "/employees/create"
-    | "/employees"
-    | "/employees/$employeeId/details"
+    | "/employees/"
     | "/employees/$employeeId/update"
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -111,31 +109,34 @@ export interface FileRouteTypes {
     | "/auth/sign-up"
     | "/employees/create"
     | "/employees"
-    | "/employees/$employeeId/details"
     | "/employees/$employeeId/update"
   id:
     | "__root__"
     | "/"
     | "/auth"
+    | "/employees"
     | "/auth/sign-in"
     | "/auth/sign-up"
     | "/employees/create"
     | "/employees/"
-    | "/employees/$employeeId/details"
     | "/employees/$employeeId/update"
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRouteRoute: typeof AuthRouteRouteWithChildren
-  EmployeesCreateRoute: typeof EmployeesCreateRoute
-  EmployeesIndexRoute: typeof EmployeesIndexRoute
-  EmployeesEmployeeIdDetailsRoute: typeof EmployeesEmployeeIdDetailsRoute
-  EmployeesEmployeeIdUpdateRoute: typeof EmployeesEmployeeIdUpdateRoute
+  EmployeesRouteRoute: typeof EmployeesRouteRouteWithChildren
 }
 
 declare module "@tanstack/react-router" {
   interface FileRoutesByPath {
+    "/employees": {
+      id: "/employees"
+      path: "/employees"
+      fullPath: "/employees"
+      preLoaderRoute: typeof EmployeesRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     "/auth": {
       id: "/auth"
       path: "/auth"
@@ -152,17 +153,17 @@ declare module "@tanstack/react-router" {
     }
     "/employees/": {
       id: "/employees/"
-      path: "/employees"
-      fullPath: "/employees"
+      path: "/"
+      fullPath: "/employees/"
       preLoaderRoute: typeof EmployeesIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof EmployeesRouteRoute
     }
     "/employees/create": {
       id: "/employees/create"
-      path: "/employees/create"
+      path: "/create"
       fullPath: "/employees/create"
       preLoaderRoute: typeof EmployeesCreateRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof EmployeesRouteRoute
     }
     "/auth/sign-up": {
       id: "/auth/sign-up"
@@ -180,17 +181,10 @@ declare module "@tanstack/react-router" {
     }
     "/employees/$employeeId/update": {
       id: "/employees/$employeeId/update"
-      path: "/employees/$employeeId/update"
+      path: "/$employeeId/update"
       fullPath: "/employees/$employeeId/update"
       preLoaderRoute: typeof EmployeesEmployeeIdUpdateRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    "/employees/$employeeId/details": {
-      id: "/employees/$employeeId/details"
-      path: "/employees/$employeeId/details"
-      fullPath: "/employees/$employeeId/details"
-      preLoaderRoute: typeof EmployeesEmployeeIdDetailsRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof EmployeesRouteRoute
     }
   }
 }
@@ -209,13 +203,26 @@ const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
   AuthRouteRouteChildren,
 )
 
+interface EmployeesRouteRouteChildren {
+  EmployeesCreateRoute: typeof EmployeesCreateRoute
+  EmployeesIndexRoute: typeof EmployeesIndexRoute
+  EmployeesEmployeeIdUpdateRoute: typeof EmployeesEmployeeIdUpdateRoute
+}
+
+const EmployeesRouteRouteChildren: EmployeesRouteRouteChildren = {
+  EmployeesCreateRoute: EmployeesCreateRoute,
+  EmployeesIndexRoute: EmployeesIndexRoute,
+  EmployeesEmployeeIdUpdateRoute: EmployeesEmployeeIdUpdateRoute,
+}
+
+const EmployeesRouteRouteWithChildren = EmployeesRouteRoute._addFileChildren(
+  EmployeesRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRouteRoute: AuthRouteRouteWithChildren,
-  EmployeesCreateRoute: EmployeesCreateRoute,
-  EmployeesIndexRoute: EmployeesIndexRoute,
-  EmployeesEmployeeIdDetailsRoute: EmployeesEmployeeIdDetailsRoute,
-  EmployeesEmployeeIdUpdateRoute: EmployeesEmployeeIdUpdateRoute,
+  EmployeesRouteRoute: EmployeesRouteRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

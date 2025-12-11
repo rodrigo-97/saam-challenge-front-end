@@ -8,19 +8,7 @@ export const showApiSuccess = (page: string, mode: Mode) => {
 	toast.success(t(`pages.${page}.notifications.${mode}`));
 };
 
-export const showApiError = (
-	error: AxiosError<ApiErrorResponse>,
-	i18nDetails?: Record<string, unknown>,
-) => {
-	const status = error.response?.status;
+export const showApiError = (error: AxiosError<ApiErrorResponse>) => {
 	const apiMessage = error.response?.data?.message;
-
-	const message =
-		([400, 404, 500].includes(status ?? 0) ? status : null) ??
-		apiMessage ??
-		"UNKNOWN_ERROR";
-
-	console.log(`errors.api.${message}`);
-
-	toast.error(t(`errors.api.${message}`, { ...i18nDetails }));
+	toast.error(t(`errors.api.${apiMessage}`));
 };

@@ -1,4 +1,11 @@
 {
+	"labels": {
+		"yes": "Sim",
+		"no": "Não",
+		"save": "Salvar",
+		"loading": "Carregando...",
+		"actions": "Ações"
+	},
 	"errors": {
 		"validations": {
 			"REQUIRED_FIELD": "Campo obrigatório",
@@ -7,7 +14,8 @@
 			"INVALID_EMAIL": "O endereço de e-mail informado não é válido.",
 			"PASSWORDS_DONT_MATCH": "As senhas informadas não coincidem.",
 			"CONFIRM_PASSWORD_REQUIRED": "A confirmação de senha é obrigatória.",
-			"PASSWORD_COMPLEXITY": "A senha deve conter pelo menos uma letra maiúscula, uma letra minúscula, um número e um caractere especial."
+			"PASSWORD_COMPLEXITY": "A senha deve conter pelo menos uma letra maiúscula, uma letra minúscula, um número e um caractere especial.",
+			"POSITIVE_NUMBER": "O valor deve ser um número positivo."
 		},
 		"api": {
 			"EMPLOYEE_NOT_FOUND": "Funcionário não encontrado.",
@@ -16,7 +24,27 @@
 			"USER_NOT_FOUND": "Usuário não encontrado."
 		}
 	},
+	"components": {
+		"drawer": {
+			"dashboard": "Dashboard",
+			"employees": "Funcionários",
+			"signOut": "Sair"
+		},
+		"navbar": {
+			"welcome": "Boas vindas, %{firstName} %{lastName}!"
+		}
+	},
 	"pages": {
+		"dashboard": {
+			"averageSalary": "Média Salarial",
+			"minSalary": "Salário mais Baixo",
+			"maxSalary": "Salário mais Alto",
+			"activeCount": "Funcionários Ativos",
+			"inactiveCount": "Funcionários Inativos",
+			"employees": "Funcionários",
+			"oldestEmployee": "Funcionário mais Antigo",
+			"newestEmployee": "Funcionário mais Novo"
+		},
 		"signIn": {
 			"header": "Entrar",
 			"submit": "Entrar",
@@ -64,6 +92,40 @@
 				"confirmPassword": {
 					"label": "Confirmar senha",
 					"placeholder": "Ex: minha senha super segura"
+				}
+			}
+		},
+		"employees": {
+			"title": "Lista de Funcionários",
+			"add": "Novo Funcionário",
+			"columns": {
+				"name": "Nome",
+				"admissionDate": "Data de admissão",
+				"salary": "Salário",
+				"active": "Ativo?"
+			},
+			"notifications": {
+				"activate": "O funcionário foi ativado com sucesso.",
+				"deactivate": "O funcionário foi desativado com sucesso.",
+				"create": "O funcionário foi criado com sucesso.",
+				"update": "O funcionário foi atualizado com sucesso.",
+				"delete": "O funcionário foi excluído com sucesso."
+			},
+			"fields": {
+				"name": {
+					"label": "Nome",
+					"placeholder": "Ex: João da Silva"
+				},
+				"admissionDate": {
+					"label": "Data de admissão",
+					"placeholder": "Ex: 01/01/2025"
+				},
+				"salary": {
+					"label": "Salário",
+					"placeholder": "Ex: R$ 1560.89"
+				},
+				"active": {
+					"label": "Ativo?"
 				}
 			}
 		}

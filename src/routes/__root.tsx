@@ -1,4 +1,12 @@
-import { createRootRoute, Outlet, redirect } from "@tanstack/react-router";
+import { GearIcon, HouseIcon, ListIcon, X, XIcon } from "@phosphor-icons/react";
+import {
+	createRootRoute,
+	Outlet,
+	redirect,
+	useLocation,
+} from "@tanstack/react-router";
+import { useState } from "react";
+import { Content } from "./@components/content";
 
 export const Route = createRootRoute({
 	beforeLoad: async () => {
@@ -7,12 +15,8 @@ export const Route = createRootRoute({
 
 		if (!token) {
 			const currentPath = window.location.pathname;
-
 			if (!publicRoutes.includes(currentPath)) {
-				throw redirect({
-					to: "/auth/sign-in",
-					replace: true,
-				});
+				throw redirect({ to: "/auth/sign-in", replace: true });
 			}
 		}
 	},
@@ -21,5 +25,12 @@ export const Route = createRootRoute({
 });
 
 function RootComponent() {
-	return <Outlet />;
+	const location = useLocation();
+	const isAuthRoute = location.pathname.startsWith("/auth/");
+
+	if (isAuthRoute) {
+		return <Outlet />;
+	}
+
+	return <Content />;
 }

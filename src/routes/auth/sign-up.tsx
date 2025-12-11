@@ -6,7 +6,7 @@ import { Input } from "@/components";
 import { t } from "@/configs";
 import { showApiError } from "@/helpers";
 import { signUpSchema } from "@/models";
-import { useSignUp } from "@/remotes/auth";
+import { useSignUp } from "@/remotes/services/auth";
 
 export const Route = createFileRoute("/auth/sign-up")({
 	component: RouteComponent,

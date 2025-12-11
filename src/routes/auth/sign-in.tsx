@@ -4,9 +4,9 @@ import { useForm } from "react-hook-form";
 import { Input } from "@/components";
 import { t } from "@/configs";
 import { showApiError } from "@/helpers";
-import { signInSchema } from "@/models";
-import { useSignIn } from "@/remotes/auth";
+import { type SignIn, signInSchema } from "@/models";
 import type { RemoteSignIn } from "@/remotes/models";
+import { useSignIn } from "@/remotes/services/auth";
 
 export const Route = createFileRoute("/auth/sign-in")({
 	component: RouteComponent,
@@ -16,10 +16,10 @@ function RouteComponent() {
 	const navigate = useNavigate();
 
 	const {
-		register,
+		setValue,
 		handleSubmit,
 		formState: { errors },
-	} = useForm({
+	} = useForm<SignIn>({
 		resolver: zodResolver(signInSchema),
 	});
 
@@ -32,6 +32,10 @@ function RouteComponent() {
 			showApiError(err);
 		},
 	});
+
+	const handleChange = (field: keyof SignIn, value: any) => {
+		setValue(field, value, { shouldValidate: true });
+	};
 
 	const onSubmit = handleSubmit(async (data) => {
 		const { accessToken } = (await signIn(data)) as unknown as RemoteSignIn;
@@ -49,18 +53,16 @@ function RouteComponent() {
 				<Input
 					label={t("pages.signIn.fields.username.label")}
 					placeholder={t("pages.signIn.fields.username.placeholder")}
-					name="username"
-					register={register}
 					error={errors.username?.message}
+					onChange={(e) => handleChange("username", e.target.value)}
 				/>
 
 				<Input
 					label={t("pages.signIn.fields.password.label")}
 					placeholder={t("pages.signIn.fields.password.placeholder")}
 					type="password"
-					name="password"
-					register={register}
 					error={errors.password?.message}
+					onChange={(e) => handleChange("password", e.target.value)}
 				/>
 
 				<button

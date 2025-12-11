@@ -1,27 +1,17 @@
 import type React from "react";
-import type { InputHTMLAttributes } from "react";
 
-type Props = InputHTMLAttributes<HTMLInputElement> & {
+type Props = {
 	label: string;
 	error?: string;
-	register: any; // type correto do react-hook-form: Use `UseFormRegister<any>` se quiser tipar
-	name: string;
-};
+} & React.InputHTMLAttributes<HTMLInputElement>;
 
-export const Input: React.FC<Props> = ({
-	label,
-	error,
-	register,
-	name,
-	...rest
-}) => {
+export const Input: React.FC<Props> = ({ label, error, name, ...rest }) => {
 	return (
 		<fieldset className="fieldset w-full">
-			<legend className="fieldset-legend">{label}</legend>
+			<legend className="fieldset-legend text-left">{label}</legend>
 			<input
-				{...register(name)}
 				{...rest}
-				className={`input w-full ${error ? "input-error" : "input-primary"}`}
+				className={`input w-full ${error ? "input-error" : ""} outline-0`}
 			/>
 			{error && <p className="label text-error whitespace-pre-wrap">{error}</p>}
 		</fieldset>
