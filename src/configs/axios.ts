@@ -9,7 +9,10 @@ api.interceptors.request.use(
 	(config) => {
 		const token = localStorage.getItem("accessToken");
 
-		if (token) {
+		const path = window.location.pathname;
+		const isAuthRoute = path.startsWith("/auth/");
+
+		if (token && !isAuthRoute) {
 			config.headers.Authorization = `Bearer ${token}`;
 		}
 
@@ -21,9 +24,15 @@ api.interceptors.request.use(
 api.interceptors.response.use(
 	(response) => response,
 	(error) => {
-		if (error.response?.status === 401) {
+		const status = error.response?.status;
+		const path = window.location.pathname;
+
+		const isAuthRoute = path.startsWith("/auth/");
+
+		if (status === 401 && !isAuthRoute) {
 			window.location.href = "/auth/sign-in";
 		}
+
 		return Promise.reject(error);
 	},
 );

@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import { Input } from "@/components";
 import { t } from "@/configs";
 import { showApiError } from "@/helpers";
-import { signUpSchema } from "@/models";
+import { type SignUp, signUpSchema } from "@/models";
 import { useSignUp } from "@/remotes/services/auth";
 
 export const Route = createFileRoute("/auth/sign-up")({
@@ -16,8 +16,8 @@ function RouteComponent() {
 	const navigate = useNavigate();
 
 	const {
-		register,
 		handleSubmit,
+		setValue,
 		formState: { errors },
 	} = useForm({
 		resolver: zodResolver(signUpSchema),
@@ -36,6 +36,10 @@ function RouteComponent() {
 		},
 	});
 
+	const handleChange = (field: keyof SignUp, value: any) => {
+		setValue(field, value, { shouldValidate: true });
+	};
+
 	const onSubmit = handleSubmit(async (data) => {
 		await signUp(data);
 		navigateToSignIn();
@@ -52,8 +56,8 @@ function RouteComponent() {
 					label={t("pages.signUp.fields.username.label")}
 					placeholder={t("pages.signUp.fields.username.placeholder")}
 					name="username"
-					register={register}
 					error={errors.username?.message}
+					onChange={(e) => handleChange("username", e.target.value)}
 				/>
 
 				<Input
@@ -61,24 +65,24 @@ function RouteComponent() {
 					placeholder={t("pages.signUp.fields.email.placeholder")}
 					type="email"
 					name="email"
-					register={register}
 					error={errors.email?.message}
+					onChange={(e) => handleChange("email", e.target.value)}
 				/>
 
 				<Input
 					label={t("pages.signUp.fields.firstName.label")}
 					placeholder={t("pages.signUp.fields.firstName.placeholder")}
 					name="firstName"
-					register={register}
 					error={errors.firstName?.message}
+					onChange={(e) => handleChange("firstName", e.target.value)}
 				/>
 
 				<Input
 					label={t("pages.signUp.fields.lastName.label")}
 					placeholder={t("pages.signUp.fields.lastName.placeholder")}
 					name="lastName"
-					register={register}
 					error={errors.lastName?.message}
+					onChange={(e) => handleChange("lastName", e.target.value)}
 				/>
 
 				<Input
@@ -86,8 +90,8 @@ function RouteComponent() {
 					placeholder={t("pages.signUp.fields.password.placeholder")}
 					type="password"
 					name="password"
-					register={register}
 					error={errors.password?.message}
+					onChange={(e) => handleChange("password", e.target.value)}
 				/>
 
 				<Input
@@ -95,8 +99,8 @@ function RouteComponent() {
 					placeholder={t("pages.signUp.fields.confirmPassword.placeholder")}
 					type="password"
 					name="confirmPassword"
-					register={register}
 					error={errors.confirmPassword?.message}
+					onChange={(e) => handleChange("confirmPassword", e.target.value)}
 				/>
 
 				<button
